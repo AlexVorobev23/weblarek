@@ -98,3 +98,84 @@ Presenter - презентер содержит основную логику п
 `emit<T extends object>(event: string, data?: T): void` - инициализация события. При вызове события в метод передается название события и объект с данными, который будет использован как аргумент для вызова обработчика.  
 `trigger<T extends object>(event: string, context?: Partial<T>): (data: T) => void` - возвращает функцию, при вызове которой инициализируется требуемое в параметрах событие с передачей в него данных из второго параметра.
 
+### Данные
+
+### Товар
+`id: string` — уникальный идентификатор товара
+`description: string` — описание товара
+`image: string` — путь к изображению товара
+`title: string` — название товара
+`category: string` — категория товара
+`price: number | null` — цена товара | `null` - товар недоступен для покупки
+
+### Покупатель
+`payment: 'card' | 'cash' | ''` — способ оплаты | '' - способ не выбран
+`email: string` — электронная почта
+`phone: string` — номер телефона
+`address: string` — адрес доставки
+
+### Модели данных
+
+#### Класс CatalogModel
+Назначение: Хранит массив всех товаров, доступных в магазине, и выбранную карточку товара
+
+Конструктор: `constructor()`
+
+Поля класса:
+`_items: IProduct[]` — массив всех товаров
+`_preview: IProduct | null` — выбранная карточка товара
+
+Методы:
+`setItems(items: IProduct[]): void` — сохраняет массив товаров
+`getItems(): IProduct[]` — возвращает массив всех товаров
+`getProductById(id: string): IProduct | undefined` — возвращает товар по id
+`setPreview(product: IProduct | null): void` — сохраняет товар для подробного просмотра
+`getPreview(): IProduct | null` — возвращает товар для подробного просмотра
+
+#### Класс BasketModel
+Назначение: Хранит товары, выбранные покупателем для покупки
+
+Конструктор: `constructor()`
+
+Поля класса:
+`_items: IProduct[]` — массив товаров в корзине
+
+Методы:
+`getItems(): IProduct[]` - возвращает список товаров в корзине
+`addItem(product: IProduct): void` — добавляет товар в корзину
+`removeItem(productId: string): void` — удаляет товар из корзины по id
+`clear(): void` — полностью очищает корзину
+`getTotalPrice(): number` — возвращает общую стоимость всех товаров в корзине
+`getItemCount(): number` — возвращает количество товаров в корзине
+`hasItem(productId: string): boolean` — проверяет наличие товара в корзине по id
+
+#### Класс OrderModel
+Назначение: Хранит данные покупателя (способ оплаты, адрес, email, телефон) и предоставляет методы для их сохранения, получения и валидации
+
+Конструктор: `constructor()`
+
+Поля класса:
+`payment: TPayment | null` — способ оплаты
+`address: string` — адрес доставки
+`email: string` — электронная почта
+`phone: string` — номер телефона
+
+Методы:
+`setPayment(value: TPayment): void` — сохраняет способ оплаты
+`setAddress(value: string): void` — сохраняет адрес
+`setEmail(value: string): void` — сохраняет email
+`setPhone(value: string): void` — сохраняет телефон
+`getOrderData(): IBuyer` — возвращает все данные покупателя
+`clear(): void` — очищает все данные покупателя
+`validateFields(): Partial<Record<keyof IBuyer, string>>` — проверяет валидность всех полей. Возвращает объект с ошибками. Если поле валидно, оно отсутствует в объекте
+
+### Слой коммуникации
+
+#### Класс WebLarekApi
+Назначение: Обеспечивает взаимодействие с API сервера магазина. Использует композицию с базовым классом `Api`
+
+Конструктор: `constructor(api: IApi)` — принимает объект, реализующий интерфейс `IApi`
+
+Методы:
+`getProducts(): Promise<IProductsResponse>` — выполняет GET-запрос к эндпоинту `/product/` и возвращает объект с массивом товаров
+`postOrder(order: IOrder): Promise<IOrderResult>` — выполняет POST-запрос к эндпоинту `/order/` и отправляет данные заказа на сервер
