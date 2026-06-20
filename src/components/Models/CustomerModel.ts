@@ -1,6 +1,6 @@
-import { IBuyer, TPayment } from '../../types';
+import { IBuyer, TPayment, TValidationErrors } from '../../types';
 
-export class OrderModel {
+export class CustomerModel {
     payment: TPayment | null = null;
     address: string = '';
     email: string = '';
@@ -22,9 +22,9 @@ export class OrderModel {
         this.phone = value;
     }
 
-    getOrderData(): IBuyer {
+    getCustomerData(): IBuyer {
         return {
-            payment: this.payment as TPayment,
+            payment: this.payment,
             address: this.address,
             email: this.email,
             phone: this.phone,
@@ -38,8 +38,8 @@ export class OrderModel {
         this.phone = '';
     }
 
-    validateFields(): Partial<Record<keyof IBuyer, string>> {
-        const errors: Partial<Record<keyof IBuyer, string>> = {};
+    validateFields(): TValidationErrors {
+        const errors: TValidationErrors = {};
 
         if (!this.payment) {
             errors.payment = 'Не выбран способ оплаты';

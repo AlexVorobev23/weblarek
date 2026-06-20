@@ -149,7 +149,7 @@ Presenter - презентер содержит основную логику п
 `getItemCount(): number` — возвращает количество товаров в корзине
 `hasItem(productId: string): boolean` — проверяет наличие товара в корзине по id
 
-#### Класс OrderModel
+#### Класс CustomerModel
 Назначение: Хранит данные покупателя (способ оплаты, адрес, email, телефон) и предоставляет методы для их сохранения, получения и валидации
 
 Конструктор: `constructor()`
@@ -165,7 +165,7 @@ Presenter - презентер содержит основную логику п
 `setAddress(value: string): void` — сохраняет адрес
 `setEmail(value: string): void` — сохраняет email
 `setPhone(value: string): void` — сохраняет телефон
-`getOrderData(): IBuyer` — возвращает все данные покупателя
+`getCustomerData(): IBuyer` — возвращает все данные покупателя
 `clear(): void` — очищает все данные покупателя
 `validateFields(): Partial<Record<keyof IBuyer, string>>` — проверяет валидность всех полей. Возвращает объект с ошибками. Если поле валидно, оно отсутствует в объекте
 
@@ -178,4 +178,4 @@ Presenter - презентер содержит основную логику п
 
 Методы:
 `getProducts(): Promise<IProductsResponse>` — выполняет GET-запрос к эндпоинту `/product/` и возвращает объект с массивом товаров
-`postOrder(order: IOrder): Promise<IOrderResult>` — выполняет POST-запрос к эндпоинту `/order/` и отправляет данные заказа на сервер
+`postCustomer(customer: ICustomer): Promise<ICustomerResult>` — выполняет POST-запрос к эндпоинту `/customer/` и отправляет данные заказа на сервер

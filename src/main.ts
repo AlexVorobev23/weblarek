@@ -4,7 +4,7 @@ import { apiProducts } from './utils/data';
 
 import { CatalogModel } from './components/Models/CatalogModel';
 import { BasketModel } from './components/Models/BasketModel';
-import { OrderModel } from './components/Models/OrderModel';
+import { CustomerModel } from './components/Models/CustomerModel';
 import { WebLarekApi } from './components/Models/WebLarekApi';
 
 import { Api } from './components/base/Api';
@@ -53,27 +53,27 @@ basketModel.addItem(product2);
 console.log('addItem() - товар добавлен');
 console.log('hasItem():', basketModel.hasItem(product2.id));
 
-console.log('Тестирование OrderModel');
-const orderModel = new OrderModel();
+console.log('Тестирование CustomerModel');
+const costomerModel = new CustomerModel();
 
-console.log('validateFields() пустых полей:', orderModel.validateFields());
+console.log('validateFields() пустых полей:', costomerModel.validateFields());
 
-orderModel.setPayment('card');
-orderModel.setAddress('Санкт-Петербург');
-orderModel.setEmail('test@yandex.com');
-orderModel.setPhone('+7 (999) 000 00 00');
+costomerModel.setPayment('card');
+costomerModel.setAddress('Санкт-Петербург');
+costomerModel.setEmail('test@yandex.com');
+costomerModel.setPhone('+7 (999) 000 00 00');
 console.log('Данные заполнены:');
-console.log('payment:', orderModel.payment);
-console.log('address:', orderModel.address);
-console.log('email:', orderModel.email);
-console.log('phone:', orderModel.phone);
+console.log('payment:', costomerModel.payment);
+console.log('address:', costomerModel.address);
+console.log('email:', costomerModel.email);
+console.log('phone:', costomerModel.phone);
 
-console.log('validateFields():', orderModel.validateFields());
-console.log('getOrderData():', orderModel.getOrderData());
+console.log('validateFields():', costomerModel.validateFields());
+console.log('getCustomerData():', costomerModel.getCustomerData());
 
-orderModel.clear();
+costomerModel.clear();
 console.log('clear() - данные очищены');
-console.log('getOrderData():', orderModel.getOrderData());
+console.log('getCustomerData():', costomerModel.getCustomerData());
 
 
 
